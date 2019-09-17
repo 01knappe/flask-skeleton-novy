@@ -44,3 +44,20 @@ class secti(Form):
 class masoform(Form):
     typ=SelectField('Typ', choices=[(1, "Hovezi"), (2, "Veprove")], default=2)
 
+class vstupnitestform(Form):
+    Jmeno = TextField('Jmeno testujiciho', validators=[
+        Length(min=3, max=8, message="Please use between 3 and 8 characters"),
+        InputRequired(message="You can't leave this empty")
+    ])
+
+    otazka1 = IntegerField('kolik je 1 + 1', validators=[
+        InputRequired(message="You can't leave this empty")
+    ])
+    otazka2= IntegerField('kolik je 1 - 1', validators=[
+        InputRequired(message="You can't leave this empty")
+    ])
+    otazka3 = TextField('Anglicky slon', validators=[
+        Length(min=8, max=8, message="Please use 8 characters"),
+        InputRequired(message="You can't leave this empty")
+    ])
+
