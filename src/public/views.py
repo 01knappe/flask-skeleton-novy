@@ -40,8 +40,9 @@ def masof():
 @blueprint.route('/vstupni_test', methods=['GET','POST'])
 def vstupnitest():
     from ..data.models import Vysledky
-    form = vstupnitestform()
+    from sqlalchemy import  func
     from flask import flash
+    form = vstupnitestform()
     if form.validate_on_submit():
         vysledek=0
         if form.otazka1.data == 2:
@@ -50,9 +51,9 @@ def vstupnitest():
             vysledek = vysledek + 1
         if form.otazka3.data.upper() == "ELEPHANT" :
             vysledek = vysledek + 1
-        i = Vysledky(username=form.Jmeno.data, hodnoceni=vysledek)
+        i = Vysledky(username=form.Jmeno.data, hodnoce=vysledek)
         db.session.add(i)
         db.session.commit()
-        flash("Vysledek ulozen")
-        return str(vysledek)
+        dotaz = db.session.query(Vysledky.username,func.count(Vysledky.hodnoce).label("suma")).group_by(Vysledky.username)
+        return render_template('public/vysledekvystup.tmpl', data=dotaz)
     return render_template('public/vstupnitest.tmpl', form=form)
