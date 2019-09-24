@@ -18,5 +18,6 @@ class Vysledky(CRUDModel):
     # Use custom constructor
     # pylint: disable=W0231
     def __init__(self, **kwargs):
+        self.acrive_token = generate_random_token()
         for k, v in kwargs.iteritems():
             setattr(self, k, v)

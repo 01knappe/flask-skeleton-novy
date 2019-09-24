@@ -1,4 +1,4 @@
-from flask_login import UserMixin
+import flask_login
 from sqlalchemy.schema import Column
 from sqlalchemy.types import Boolean, Integer, String
 
@@ -8,7 +8,7 @@ from ..util import generate_random_token
 from ...settings import app_config
 from ...extensions import bcrypt
 
-class User(CRUDModel, UserMixin):
+class User(CRUDModel, flask_login.UserMixin):
     __tablename__ = 'users'
 
     id = Column(Integer, primary_key=True)

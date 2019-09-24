@@ -54,6 +54,35 @@ def vstupnitest():
         i = Vysledky(username=form.Jmeno.data, hodnoce=vysledek)
         db.session.add(i)
         db.session.commit()
-        dotaz = db.session.query(Vysledky.username,func.count(Vysledky.hodnoce).label("suma")).group_by(Vysledky.username)
+        dotaz = db.session.query(Vysledky.username,Vysledky.hodnoce).all()
         return render_template('public/vysledekvystup.tmpl', data=dotaz)
     return render_template('public/vstupnitest.tmpl', form=form)
+
+
+@blueprint.route('/nactenijson', methods=['GET', 'POST'])
+def nactenijson():
+    from flask import jsonify
+    import requests, os
+    os.environ['NO_PROXY'] = '127.0.0.1'
+    proxies = {
+        "http": None,
+        "https": "http://192.168.1.1:800",
+    }
+
+    response = requests.get("https://samples.openweathermap.org/data/2.5/forecast?id=524901&appid=b1b15e88fa797225412429c1c50c122a1", proxies=proxies)
+    json_res = response.json()
+    data = []
+    for radek in json_res["list"]:
+        data.append(radek["main"]["temp"])
+    #return render_template("public/dataprint.tmpl",data=data)
+    #return jsonify(json_res)
+    return render_template('public/chart.tmpl', values=data, labels=data, legend="epidemie kurovce v Moskve")
+
+
+
+@blueprint.route("/simple_chart",methods=['GET'])
+def chart():
+    legend = 'Monthly Data'
+    labels = ["January", "February", "March", "April", "May", "June", "July", "August"]
+    values = [10, 6, 8, 7, 5, 4, 7, 8]
+    return render_template('public/chart.tmpl', values=values, labels=labels, legend=legend)
