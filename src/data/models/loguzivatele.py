@@ -27,3 +27,17 @@ class LogUser(CRUDModel):
     def find_by_prijmeni(prijmeni):
         return db.session.query(LogUser).filter_by(Grussmann = prijmeni).all()
 
+class Child(CRUDModel):
+    __tablename__ = 'child'
+    id = Column(Integer, primary_key=True )
+    parent_id = Column(Integer, ForeignKey('parent.id'))
+    jmeno = Column(String, nullable=False, index=True)
+
+class Parent(CRUDModel):
+    __tablename__ = 'parent'
+    __table_args__ = {'sqlite_autoincrement': True}
+    id = Column(Integer, primary_key=True )
+    children = relationship("Child",backref="parent")
+    prijmeni = Column(String, nullable=False, index=True)
+    pohlavi = Column(Integer,default=1)
+
