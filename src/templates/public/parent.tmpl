@@ -1,0 +1,15 @@
+{% from "macros/fields.tmpl" import render_input_field, render_submit, render_input%}
+{% extends "shared/layout.tmpl" %}
+
+{% block title %}Forgotten password{% endblock %}
+
+{% block content %}
+  <h3>Parent</h3>
+  <div class="form-group">Zadej udaje o rodici.</div>
+  <form method="POST" id='insert-form'>
+    {{ form.hidden_tag() }}
+    {{ render_input_field(form.prijmeni) }}
+    {{ render_input(form.pohlavi) }}
+    {{ render_submit() }}
+  </form>
+{% endblock %}

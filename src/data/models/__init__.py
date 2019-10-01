@@ -4,3 +4,5 @@ from .loguzivatele import LogUser
 from .test import LogUser1
 from .maso import Maso
 from .vysledky import Vysledky
+from .loguzivatele import Parent
+from .loguzivatele import Child

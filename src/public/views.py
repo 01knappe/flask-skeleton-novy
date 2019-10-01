@@ -2,9 +2,9 @@
 Logic for dashboard related routes
 """
 from flask import Blueprint, render_template
-from .forms import LogUserForm, secti,masoform, vstupnitestform
+from .forms import LogUserForm, secti,masoform, vstupnitestform, parentform, childform
 from ..data.database import db
-from ..data.models import LogUser
+from ..data.models import LogUser, Parent, Child
 blueprint = Blueprint('public', __name__)
 
 @blueprint.route('/', methods=['GET'])
@@ -86,3 +86,23 @@ def chart():
     labels = ["January", "February", "March", "April", "May", "June", "July", "August"]
     values = [10, 6, 8, 7, 5, 4, 7, 8]
     return render_template('public/chart.tmpl', values=values, labels=labels, legend=legend)
+
+
+
+
+@blueprint.route('/vstup-parent',methods=['GET', 'POST'])
+def InsertParent():
+    form = parentform()
+    if form.is_submitted():
+        Parent.create(**form.data)
+    return render_template("public/parent.tmpl", form=form)
+
+@blueprint.route('/vstup-child',methods=['GET', 'POST'])
+def InsertChild():
+    form = childform()
+    if form.validate_on_submit():
+        Child.create(**form.data)
+    return render_template("public/child.tmpl", form=form)
+
+
+
