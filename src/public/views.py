@@ -97,9 +97,11 @@ def InsertParent():
         Parent.create(**form.data)
     return render_template("public/parent.tmpl", form=form)
 
+
 @blueprint.route('/vstup-child',methods=['GET', 'POST'])
 def InsertChild():
     form = childform()
+    form.parent_id.choices = db.session.query(Parent.id,Parent.prijmeni).all()
     if form.validate_on_submit():
         Child.create(**form.data)
     return render_template("public/child.tmpl", form=form)

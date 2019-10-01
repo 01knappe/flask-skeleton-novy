@@ -73,7 +73,7 @@ class parentform(Form):
     pohlavi = SelectField("Pohlavi",choices=[(1,"zena"),(2,"muz")],default=1,validators=[InputRequired])
 
 class childform(Form):
-    parent_id = IntegerField('Id ditete')
+    parent_id = SelectField(choices=[])
     jmeno = TextField('Zadej jmeno ditete', validators=[
         Length(min=3, max=20, message="Please use between 3 and 20 characters"),
         InputRequired(message="You can't leave this empty")
