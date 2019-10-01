@@ -102,7 +102,7 @@ def InsertParent():
 def InsertChild():
     form = childform()
     form.parent_id.choices = db.session.query(Parent.id,Parent.prijmeni).all()
-    if form.validate_on_submit():
+    if form.is_submitted():
         Child.create(**form.data)
     return render_template("public/child.tmpl", form=form)
 
