@@ -6,3 +6,4 @@ from .maso import Maso
 from .vysledky import Vysledky
 from .loguzivatele import Parent
 from .loguzivatele import Child
+from .formular import Formular

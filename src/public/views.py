@@ -2,9 +2,9 @@
 Logic for dashboard related routes
 """
 from flask import Blueprint, render_template
-from .forms import LogUserForm, secti,masoform, vstupnitestform, parentform, childform
+from .forms import LogUserForm, secti,masoform, vstupnitestform, parentform, childform, formularform
 from ..data.database import db
-from ..data.models import LogUser, Parent, Child
+from ..data.models import LogUser, Parent, Child, Formular
 blueprint = Blueprint('public', __name__)
 
 @blueprint.route('/', methods=['GET'])
@@ -105,6 +105,22 @@ def InsertChild():
     if form.is_submitted():
         Child.create(**form.data)
     return render_template("public/child.tmpl", form=form)
+
+
+@blueprint.route('/vstup-formular',methods=['GET', 'POST'])
+def InsertFormular():
+    form = formularform()
+    if form.is_submitted():
+        Formular.create(**form.data)
+    return render_template("public/vstup-formular.tmpl", form=form)
+
+
+@blueprint.route('/vystup-formular',methods=['GET', 'POST'])
+def vystupFormular():
+    data = db.session.query(Formular).all()
+    return render_template("public/vystup-formular.tmpl",data=data)
+
+
 
 
 

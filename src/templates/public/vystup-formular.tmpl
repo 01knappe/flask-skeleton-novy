@@ -1,0 +1,17 @@
+{% from "macros/fields.tmpl" import render_input_field, render_submit %}
+{% extends "shared/layout.tmpl" %}
+
+{% block title %}Vystup{% endblock %}
+
+{% block content %}
+<h2>Vystupni formular</h2>
+ <table>
+    {% for n in data %}
+      <tr><td>{{n.id}}</td>
+          <td>{{n.jmeno}}</td>
+          <td>{{n.prijmeni}}</td>
+      </tr>
+    {% endfor %}
+    </table>
+
+{% endblock %}

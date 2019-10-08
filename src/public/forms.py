@@ -78,3 +78,14 @@ class childform(Form):
         Length(min=3, max=20, message="Please use between 3 and 20 characters"),
         InputRequired(message="You can't leave this empty")
     ])
+
+
+class formularform(Form):
+    jmeno = TextField('Jmeno', validators=[
+        Length(min=3, max=20, message="Please use between 3 and 20 characters"),
+        InputRequired(message="You can't leave this empty")
+    ])
+    prijmeni = TextField('Prijmeni', validators=[
+        Length(min=3, max=20, message="Please use between 3 and 20 characters"),
+        InputRequired(message="You can't leave this empty")
+    ])
